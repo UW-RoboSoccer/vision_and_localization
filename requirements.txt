@@ -1,0 +1,5 @@
+numpy
+pandas
+matplotlib
+lxml
+opencv-python
