@@ -4,7 +4,7 @@ import pathlib
 from pydantic import BaseModel
 
 sys.path.append(str(pathlib.Path(__file__).resolve().parent.parent.parent))
-from types.input_types import camera_types, motor_types
+from data_types.input_types import camera_types, motor_types
 
 
 class InputData(BaseModel):
