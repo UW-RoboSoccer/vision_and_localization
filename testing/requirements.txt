@@ -3,3 +3,5 @@ pandas
 matplotlib
 lxml
 opencv-python
+scikit-learn
+ultralytics

@@ -1,0 +1,6 @@
+train: 2023_1/train/images
+val: 2023_1/val/images
+
+nc: 5
+names: ["centerspot", "robot", "ball", "goalpost", "goalspot"]
+
