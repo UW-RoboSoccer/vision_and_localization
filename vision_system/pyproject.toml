@@ -1,13 +1,16 @@
 [tool.poetry]
-name = "inference"
+name = "vision-system"
 version = "0.1.0"
 description = ""
 authors = ["TongguangZhang <tonggz250@gmail.com>"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
-
+pydantic = "^2.11.4"
+opencv-python = "^4.11.0.86"
+pydantic-settings = "^2.9.1"
 
 [build-system]
 requires = ["poetry-core"]
