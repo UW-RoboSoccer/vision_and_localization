@@ -3,3 +3,5 @@ data/
 .DS_Store
 datasets/
 runs/
+__pycache__/
+vision_system/tests/images
