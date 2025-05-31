@@ -24,7 +24,7 @@ while True:
         print("Failed to capture frame")
         break
     print(f"Frame captured {frame.shape}")
-    resized = cv2.resize(frame, (960, 270))
+    resized = cv2.resize(frame, (1920, 540))
 
     left = frame[:, : frame.shape[1] // 2, :]
     right = frame[:, frame.shape[1] // 2 :, :]
