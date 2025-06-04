@@ -1,6 +1,7 @@
 import sys
 import pathlib
 import os
+import shutil
 
 import cv2
 from fastapi import APIRouter, Response, WebSocket
@@ -25,12 +26,10 @@ async def capture():
     left = frame[:, : shape[1] // 2]
     right = frame[:, shape[1] // 2 :]
 
-    print(os.listdir(save_path))
-    idx = (
-        max([int(name.split(".")[0].split("_")[1]) for name in os.listdir(f"{save_path}/left")]) + 1
-        if os.listdir(f"{save_path}/left/")
-        else 0
-    )
+    os.makedirs(f"{save_path}/left", exist_ok=True)
+    os.makedirs(f"{save_path}/right", exist_ok=True)
+
+    idx = len(os.listdir(f"{save_path}/left"))
     cv2.imwrite(f"{save_path}/left/img_{idx}.jpg", left)
     cv2.imwrite(f"{save_path}/right/img_{idx}.jpg", right)
     print("Images saved successfully.")
