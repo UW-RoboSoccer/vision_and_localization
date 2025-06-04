@@ -7,8 +7,17 @@ function App() {
         <>
             <div>
                 <p>Camera Tuning UI</p>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                    <CaptureButton />
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "10px",
+                    }}
+                >
+                    <CaptureButton url="http://localhost:8085/capture/capture" text="Capture" />
+                    <CaptureButton url="http://localhost:8085/capture/save" text="Save" />
+                    <CaptureButton url="http://localhost:8085/capture/clear" text="Clear" />
                 </div>
                 <ImageStream />
             </div>

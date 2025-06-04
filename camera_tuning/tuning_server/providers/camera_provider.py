@@ -8,13 +8,9 @@ class CameraProvider:
     def get_cap(cls, camera_index: int = 0):
         if cls.cap:
             if cls.cap.isOpened():
-                print("Camera already opened")
                 return cls.cap
-            else:
-                print("Camera not opened, reinitializing")
-            return cls.cap
 
-        print("getting camera", camera_index)
+        print("Opening Camera", camera_index)
         cls.cap = cv2.VideoCapture(camera_index)
         print("Camera initialized:", cls.cap.isOpened())
 

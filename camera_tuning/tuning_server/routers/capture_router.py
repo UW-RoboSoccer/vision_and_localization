@@ -33,3 +33,33 @@ async def capture():
     cv2.imwrite(f"{save_path}/left/img_{idx}.jpg", left)
     cv2.imwrite(f"{save_path}/right/img_{idx}.jpg", right)
     print("Images saved successfully.")
+
+
+@router.post("/clear")
+async def clear_images():
+    left_path = f"{save_path}/left"
+    right_path = f"{save_path}/right"
+
+    for filename in os.listdir(left_path):
+        file_path = os.path.join(left_path, filename)
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+
+    for filename in os.listdir(right_path):
+        file_path = os.path.join(right_path, filename)
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+
+    return {"message": "Images cleared successfully."}
+
+
+@router.post("/save")
+async def save_images():
+    os.makedirs(f"{save_path}/saved", exist_ok=True)
+    save_folder = f"{save_path}/saved/save_{len(os.listdir(f'{save_path}/saved'))}"
+    print(f"Saving images to {save_folder}")
+    os.makedirs(save_folder, exist_ok=True)
+    shutil.copytree(f"{save_path}/left", f"{save_folder}/left")
+    shutil.copytree(f"{save_path}/right", f"{save_folder}/right")
+
+    return {"message": "Images saved successfully."}

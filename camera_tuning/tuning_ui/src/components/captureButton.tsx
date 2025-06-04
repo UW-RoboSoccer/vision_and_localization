@@ -1,14 +1,19 @@
-const CaptureButton = () => {
+type CaptureButtonProps = {
+    url: string
+    text: string
+}
+
+const CaptureButton = ({ url, text }: CaptureButtonProps) => {
     const handleCapture = () => {
         // send post request to capture image
-        fetch("http://localhost:8085/capture/capture", {
+        fetch(url, {
             method: "POST",
         })
     }
 
     return (
         <button onClick={handleCapture} className="capture-button">
-            Capture
+            {text}
         </button>
     )
 }
