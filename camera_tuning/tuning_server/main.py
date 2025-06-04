@@ -5,6 +5,9 @@ from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 
+sys.path.append(str(pathlib.Path(__file__).resolve().parent))
+from routers import camera_router
+
 origins = []
 
 origins.extend(
@@ -23,6 +26,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(camera_router.router, prefix="/camera", tags=["Camera"])
 
 
 @app.get("/", tags=["Root"])
