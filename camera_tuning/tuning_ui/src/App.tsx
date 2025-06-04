@@ -10,14 +10,27 @@ function App() {
                 <div
                     style={{
                         display: "flex",
-                        justifyContent: "center",
+                        flexDirection: "column",
                         alignItems: "center",
                         gap: "10px",
                     }}
                 >
-                    <CaptureButton url="http://localhost:8085/capture/capture" text="Capture" />
-                    <CaptureButton url="http://localhost:8085/capture/save" text="Save" />
-                    <CaptureButton url="http://localhost:8085/capture/clear" text="Clear" />
+                    <CaptureButton
+                        url="http://localhost:8085/calibrate/calibrate"
+                        text="Calibrate Camera"
+                    />
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            gap: "10px",
+                        }}
+                    >
+                        <CaptureButton url="http://localhost:8085/capture/capture" text="Capture" />
+                        <CaptureButton url="http://localhost:8085/capture/save" text="Save" />
+                        <CaptureButton url="http://localhost:8085/capture/clear" text="Clear" />
+                    </div>
                 </div>
                 <ImageStream />
             </div>

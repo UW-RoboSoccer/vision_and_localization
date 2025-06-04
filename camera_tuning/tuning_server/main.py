@@ -6,7 +6,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 sys.path.append(str(pathlib.Path(__file__).resolve().parent))
-from routers import camera_router, capture_router
+from routers import camera_router, capture_router, calibrate_router
 
 origins = []
 
@@ -30,6 +30,8 @@ app.add_middleware(
 app.include_router(camera_router.router, prefix="/camera", tags=["Camera"])
 
 app.include_router(capture_router.router, prefix="/capture", tags=["Capture"])
+
+app.include_router(calibrate_router.router, prefix="/calibrate", tags=["Calibrate"])
 
 
 @app.get("/", tags=["Root"])
