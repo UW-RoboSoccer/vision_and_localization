@@ -21,8 +21,15 @@ square_size = 29.0
 
 @router.post("/calibrate")
 async def calibrate_camera(save_index: str | None = None):
-    save_path = f"{save_prefix}/saved/save_{save_index}" if save_index else save_prefix
+    print(f"Calibrating camera with save index: {save_index}")
+    try:
+        save_path = f"{save_prefix}/saved/save_{save_index}" if save_index else save_prefix
+    except:
+        return {"error": "Invalid save index"}
+
     num_images = len(os.listdir(f"{save_path}/left"))
+    if num_images == 0:
+        return {"error": "No images found for calibration. Please capture images first."}
 
     object_points = np.zeros((chess_board_size[0] * chess_board_size[1], 3), np.float32)
     object_points[:, :2] = np.mgrid[0 : chess_board_size[0], 0 : chess_board_size[1]].T.reshape(-1, 2)
@@ -32,9 +39,8 @@ async def calibrate_camera(save_index: str | None = None):
     res_left, corner_points_left = get_corners(save_path, num_images, "left")
     res_right, corner_points_right = get_corners(save_path, num_images, "right")
 
-    print(res_left, res_right)
     if not res_left or not res_right:
-        return {"error": "Failed to find corners in the images."}
+        return {"error": f"Failed to find corners in the images. res_left: {res_left}, res_right: {res_right}"}
 
     (
         ret_left,
@@ -54,8 +60,8 @@ async def calibrate_camera(save_index: str | None = None):
     ) = calibrate(object_points_list, corner_points_left, corner_points_right, frame_size)
 
     calibration_save_path = f"{str(pathlib.Path(__file__).resolve().parent.parent)}/calibration_save"
-    save_index = len(os.listdir(calibration_save_path))
-    with open(f"{calibration_save_path}/calibration_{save_index}.json", "w") as f:
+    save_result_index = len(os.listdir(calibration_save_path))
+    with open(f"{calibration_save_path}/calibration_{save_result_index}.json", "w") as f:
         json_data = {
             "ret_left": ret_left,
             "ret_right": ret_right,
@@ -75,10 +81,20 @@ async def calibrate_camera(save_index: str | None = None):
         f.write(json.dumps(json_data, indent=4))
 
     return {
-        "ret_left": ret_left,
-        "ret_right": ret_right,
-        "ret_calibrate": ret_calibrate,
-        "save_index": save_index,
+        "error": None,
+        "data": {
+            "ret_left": ret_left,
+            "ret_right": ret_right,
+            "ret_calibrate": ret_calibrate,
+            "K_left": K_left.tolist(),
+            "D_left": D_left.tolist(),
+            "K_right": K_right.tolist(),
+            "D_right": D_right.tolist(),
+            "R": cv2.Rodrigues(R)[0].tolist(),
+            "T": T.tolist(),
+            "Q": Q.tolist(),
+            "save_result_index": save_result_index,
+        },
     }
 
 

@@ -6,8 +6,8 @@ export interface CalibrationData {
     K_right: number[][]
     D_left: number[][]
     D_right: number[][]
-    R: number[]
-    T: number[]
+    R: number[][]
+    T: number[][]
     Q: number[]
     save_result_index: number
 }
