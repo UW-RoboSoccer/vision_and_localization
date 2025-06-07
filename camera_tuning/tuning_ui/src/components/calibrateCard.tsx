@@ -5,12 +5,16 @@ import CalibrationResult from "./calibrationResult"
 const CalibrateCard = () => {
     const [calibrationData, setcalibrationData] = useState<CalibrationData | null>(null)
     const [calibrationDataIndex, setCalibrationDataIndex] = useState<number | undefined>(undefined)
+    const [saveResult, setSaveResult] = useState<boolean>(false)
 
     const handleCalibrate = async () => {
         console.log("Starting calibration with index:", calibrationDataIndex)
-        fetch(`http://localhost:8085/calibrate/calibrate?save_index=${calibrationDataIndex}`, {
-            method: "POST",
-        })
+        fetch(
+            `http://localhost:8085/calibrate/calibrate?save_index=${calibrationDataIndex}&save_result=${saveResult}`,
+            {
+                method: "POST",
+            }
+        )
             .then((response) => response.json())
             .then((data) => {
                 console.log("Calibration response received:", data)
@@ -29,9 +33,14 @@ const CalibrateCard = () => {
             })
     }
 
-    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleOnSaveIndexChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value
         setCalibrationDataIndex(value ? parseInt(value, 10) : undefined)
+    }
+
+    const handleOnSaveResultChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.checked
+        setSaveResult(value)
     }
 
     return (
@@ -41,10 +50,25 @@ const CalibrateCard = () => {
             <div
                 style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "10px" }}
             >
-                <input type="text" value={calibrationDataIndex} onChange={handleOnChange} />
+                <input
+                    type="text"
+                    value={calibrationDataIndex}
+                    onChange={handleOnSaveIndexChange}
+                />
                 <button onClick={handleCalibrate} className="calibrate-button">
                     Calibrate
                 </button>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: "5px",
+                    }}
+                >
+                    <p>Save Calibration Result</p>
+                    <input type="checkbox" onChange={handleOnSaveResultChange}></input>
+                </div>
             </div>
             <div>
                 {calibrationData ? (

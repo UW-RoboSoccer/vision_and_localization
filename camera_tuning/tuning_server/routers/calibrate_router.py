@@ -20,7 +20,7 @@ square_size = 29.0
 
 
 @router.post("/calibrate")
-async def calibrate_camera(save_index: str | None = None):
+async def calibrate_camera(save_index: str | None = None, save_result: bool = False):
     print(f"Calibrating camera with save index: {save_index}")
     try:
         save_path = f"{save_prefix}/saved/save_{save_index}" if save_index else save_prefix
@@ -59,26 +59,27 @@ async def calibrate_camera(save_index: str | None = None):
         Q,
     ) = calibrate(object_points_list, corner_points_left, corner_points_right, frame_size)
 
-    calibration_save_path = f"{str(pathlib.Path(__file__).resolve().parent.parent)}/calibration_save"
-    save_result_index = len(os.listdir(calibration_save_path))
-    with open(f"{calibration_save_path}/calibration_{save_result_index}.json", "w") as f:
-        json_data = {
-            "ret_left": ret_left,
-            "ret_right": ret_right,
-            "ret_calibrate": ret_calibrate,
-            "mapx_left": mapx_left.tolist(),
-            "mapy_left": mapy_left.tolist(),
-            "mapx_right": mapx_right.tolist(),
-            "mapy_right": mapy_right.tolist(),
-            "K_left": K_left.tolist(),
-            "D_left": D_left.tolist(),
-            "K_right": K_right.tolist(),
-            "D_right": D_right.tolist(),
-            "R": R.tolist(),
-            "T": T.tolist(),
-            "Q": Q.tolist(),
-        }
-        f.write(json.dumps(json_data, indent=4))
+    if save_result:
+        calibration_save_path = f"{str(pathlib.Path(__file__).resolve().parent.parent)}/calibration_save"
+        save_result_index = len(os.listdir(calibration_save_path))
+        with open(f"{calibration_save_path}/calibration_{save_result_index}.json", "w") as f:
+            json_data = {
+                "ret_left": ret_left,
+                "ret_right": ret_right,
+                "ret_calibrate": ret_calibrate,
+                "mapx_left": mapx_left.tolist(),
+                "mapy_left": mapy_left.tolist(),
+                "mapx_right": mapx_right.tolist(),
+                "mapy_right": mapy_right.tolist(),
+                "K_left": K_left.tolist(),
+                "D_left": D_left.tolist(),
+                "K_right": K_right.tolist(),
+                "D_right": D_right.tolist(),
+                "R": R.tolist(),
+                "T": T.tolist(),
+                "Q": Q.tolist(),
+            }
+            f.write(json.dumps(json_data, indent=4))
 
     return {
         "error": None,
@@ -93,7 +94,7 @@ async def calibrate_camera(save_index: str | None = None):
             "R": cv2.Rodrigues(R)[0].tolist(),
             "T": T.tolist(),
             "Q": Q.tolist(),
-            "save_result_index": save_result_index,
+            "save_result_index": save_result_index if save_result else None,
         },
     }
 
