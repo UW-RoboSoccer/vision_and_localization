@@ -11,10 +11,18 @@ const CalibrationResult = ({ calibrationData }: CalibrationResultProps) => {
         <div
             style={{
                 display: "flex",
-                flexDirection: "row",
+                flexDirection: "column",
             }}
         >
-            <div>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "20px",
+                }}
+            >
                 <h2>Calibration Metrics</h2>
                 <p>Left Camera Ret: {calibrationData.ret_left.toFixed(2)}</p>
                 <p>Right Camera Ret: {calibrationData.ret_right.toFixed(2)}</p>
@@ -40,8 +48,8 @@ const CalibrationResult = ({ calibrationData }: CalibrationResultProps) => {
                         D={calibrationData.D_right}
                         side="Right"
                     />
+                    <CameraExtrinsics R={calibrationData.R} T={calibrationData.T} />
                 </div>
-                <CameraExtrinsics R={calibrationData.R} T={calibrationData.T} />
             </div>
         </div>
     )
