@@ -5,7 +5,6 @@ type CaptureButtonProps = {
 
 const CaptureButton = ({ url, text }: CaptureButtonProps) => {
     const handleCapture = () => {
-        // send post request to capture image
         fetch(url, {
             method: "POST",
         })
