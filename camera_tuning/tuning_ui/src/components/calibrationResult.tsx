@@ -1,6 +1,6 @@
 import { CalibrationData } from "../types/calibrationResponse"
 import CameraExtrinsics from "./cameraExtrinsics"
-import CameraMatrix from "./cameraMatrix"
+import CameraIntrinsincs from "./cameraIntrinsics"
 
 interface CalibrationResultProps {
     calibrationData: CalibrationData
@@ -38,12 +38,12 @@ const CalibrationResult = ({ calibrationData }: CalibrationResultProps) => {
                         justifyContent: "center",
                     }}
                 >
-                    <CameraMatrix
+                    <CameraIntrinsincs
                         K={calibrationData.K_left}
                         D={calibrationData.D_left}
                         side="Left"
                     />
-                    <CameraMatrix
+                    <CameraIntrinsincs
                         K={calibrationData.K_right}
                         D={calibrationData.D_right}
                         side="Right"

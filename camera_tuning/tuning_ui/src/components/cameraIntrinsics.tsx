@@ -1,10 +1,10 @@
-interface CameraMatrixProps {
+interface CameraIntrinsincsProps {
     K: number[][]
     D: number[][]
     side: "Left" | "Right"
 }
 
-const CameraMatrix = ({ K, D, side }: CameraMatrixProps) => {
+const CameraIntrinsincs = ({ K, D, side }: CameraIntrinsincsProps) => {
     const D_squeezed = D[0]
     return (
         <div>
@@ -37,5 +37,5 @@ const CameraMatrix = ({ K, D, side }: CameraMatrixProps) => {
     )
 }
 
-export default CameraMatrix
+export default CameraIntrinsincs
 
