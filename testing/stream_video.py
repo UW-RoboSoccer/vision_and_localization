@@ -4,7 +4,7 @@ import time
 print("Testing video stream capture...")
 frame_size = (3840, 1080)
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 print("Video capture opened")
 
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, frame_size[0])
