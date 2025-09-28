@@ -11,7 +11,7 @@ class CalibrationProvider:
     @classmethod
     def set_calibration(cls, calibration_index: str) -> bool:
         if not calibration_index:
-            return cls.calibration
+            return False
 
         calibration_file_path = f"{calibration_save_path}/calibration_{calibration_index}.json"
         if not os.path.exists(calibration_file_path):

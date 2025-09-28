@@ -29,9 +29,9 @@ stereo = cv2.StereoSGBM.create(
 
 
 @router.post("/load_calibration")
-async def load_calibration(save_index: str) -> bool:
+async def load_calibration(save_index: str) -> dict[str, bool]:
     calibration_set = CalibrationProvider.set_calibration(save_index)
-    return calibration_set
+    return {"success": calibration_set}
 
 
 def measure_distance(stereo_frame, stereo, mapx_left, mapy_left, mapx_right, mapy_right):

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import "./App.css"
 import CalibrationModule from "./modules/calibrationModule"
+import DistanceModule from "./modules/distanceModule"
 
 function App() {
     const [mode, setMode] = useState(true)
@@ -10,7 +11,7 @@ function App() {
                 Toggle Mode
             </button>
 
-            {mode ? <CalibrationModule /> : <div>Test</div>}
+            {mode ? <CalibrationModule /> : <DistanceModule />}
         </>
     )
 }
