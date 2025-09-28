@@ -13,6 +13,7 @@ from providers.camera_provider import CameraProvider
 router = APIRouter()
 
 save_prefix = f"{str(pathlib.Path(__file__).resolve().parent.parent)}/tuning_images"
+calibration_save_path = f"{str(pathlib.Path(__file__).resolve().parent.parent)}/calibration_save"
 
 chess_board_size = (7, 5)
 frame_size = (3840, 1080)
@@ -60,7 +61,6 @@ async def calibrate_camera(save_index: str | None = None, save_result: bool = Fa
     ) = calibrate(object_points_list, corner_points_left, corner_points_right, frame_size)
 
     if save_result:
-        calibration_save_path = f"{str(pathlib.Path(__file__).resolve().parent.parent)}/calibration_save"
         save_result_index = len(os.listdir(calibration_save_path))
         with open(f"{calibration_save_path}/calibration_{save_result_index}.json", "w") as f:
             json_data = {
