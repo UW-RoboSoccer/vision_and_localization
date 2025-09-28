@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from "react"
 
-const ImageStream = () => {
+interface ImageStreamProps {
+    socketUrl: string
+}
+
+const ImageStream = ({ socketUrl }: ImageStreamProps) => {
     const [imgSrc, setImgSrc] = useState<string | null>(null)
     const wsRef = useRef<WebSocket | null>(null)
 
     useEffect(() => {
-        const ws = new WebSocket("ws://localhost:8085/camera/ws")
+        const ws = new WebSocket(socketUrl)
         ws.binaryType = "arraybuffer"
 
         ws.onopen = () => {
