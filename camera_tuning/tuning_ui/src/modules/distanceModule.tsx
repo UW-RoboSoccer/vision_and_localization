@@ -38,7 +38,18 @@ const DistanceModule = () => {
                 Load Calibration
             </button>
             {calibrationLoaded ? (
-                <ImageStream socketUrl="ws://localhost:8085/distance/ws" />
+                <div>
+                    <ImageStream
+                        socketUrl="ws://localhost:8085/distance/ws"
+                        width={640}
+                        height={360}
+                    />
+                    <ImageStream
+                        socketUrl="ws://localhost:8085/camera/ws"
+                        width={1280}
+                        height={360}
+                    />
+                </div>
             ) : (
                 <p>Load a calibration first</p>
             )}

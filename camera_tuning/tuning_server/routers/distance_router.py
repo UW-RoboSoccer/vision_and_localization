@@ -51,7 +51,6 @@ def measure_distance(stereo_frame, stereo, mapx_left, mapy_left, mapx_right, map
 def get_point_cloud(disparity, Q):
     point_cloud = cv2.reprojectImageTo3D(disparity, Q)
     depth = point_cloud[:, :, 2]
-    valid = np.isfinite(depth) & (depth > 0)
 
     depth_vis = np.clip(depth, 300, 1500)  # Adjust these bounds as needed
     depth_vis = cv2.normalize(depth_vis, None, 0, 255, cv2.NORM_MINMAX)
@@ -71,11 +70,11 @@ async def distance_stream(websocket: WebSocket):
                 await asyncio.sleep(1)
                 continue
 
-            mapx_left = calibration["mapx_left"]
-            mapy_left = calibration["mapy_left"]
-            mapx_right = calibration["mapx_right"]
-            mapy_right = calibration["mapy_right"]
-            Q = calibration["Q"]
+            mapx_left = np.array(calibration["mapx_left"], dtype=np.float32)
+            mapy_left = np.array(calibration["mapy_left"], dtype=np.float32)
+            mapx_right = np.array(calibration["mapx_right"], dtype=np.float32)
+            mapy_right = np.array(calibration["mapy_right"], dtype=np.float32)
+            Q = np.array(calibration["Q"], dtype=np.float64)
 
             cap = CameraProvider.get_cap()
             ret, frame = cap.read()
@@ -88,6 +87,6 @@ async def distance_stream(websocket: WebSocket):
 
             _, buffer = cv2.imencode(".jpg", point_cloud)
             await websocket.send_bytes(buffer.tobytes())
-            await asyncio.sleep(1 / 15)  # 15 FPS cap
+            await asyncio.sleep(1)  # 15 FPS cap
     except Exception as e:
         print("WebSocket connection closed:", e)

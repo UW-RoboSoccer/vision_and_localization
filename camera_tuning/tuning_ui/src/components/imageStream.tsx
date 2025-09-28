@@ -2,9 +2,11 @@ import { useEffect, useRef, useState } from "react"
 
 interface ImageStreamProps {
     socketUrl: string
+    width: number
+    height: number
 }
 
-const ImageStream = ({ socketUrl }: ImageStreamProps) => {
+const ImageStream = ({ socketUrl, width, height }: ImageStreamProps) => {
     const [imgSrc, setImgSrc] = useState<string | null>(null)
     const wsRef = useRef<WebSocket | null>(null)
 
@@ -39,7 +41,7 @@ const ImageStream = ({ socketUrl }: ImageStreamProps) => {
     return (
         <div>
             {imgSrc ? (
-                <img src={imgSrc} width={1280} height={360} alt="Camera Stream" />
+                <img src={imgSrc} width={width} height={height} alt="Camera Stream" />
             ) : (
                 <p>Connecting to camera...</p>
             )}

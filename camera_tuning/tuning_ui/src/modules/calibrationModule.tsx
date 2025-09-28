@@ -27,7 +27,7 @@ const CalibrationModule = () => {
                 <CaptureButton url="http://localhost:8085/capture/save" text="Save" />
                 <CaptureButton url="http://localhost:8085/capture/clear" text="Clear" />
             </div>
-            <ImageStream socketUrl="ws://localhost:8085/camera/ws" />
+            <ImageStream socketUrl="ws://localhost:8085/camera/ws" width={1280} height={360} />
         </div>
     )
 }
